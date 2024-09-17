@@ -53,4 +53,4 @@ export class BasePage {
         .pause(moveDurationMS)
     }; 
 
-};
+}
