@@ -1,5 +1,6 @@
 import {Actions, Builder, By, Capabilities, until, WebDriver, WebElement} from 'selenium-webdriver';
 const chromedriver = require('chromedriver');
+const fs = require('fs');
 
 interface Options {
     driver?: WebDriver;
@@ -49,5 +50,18 @@ export class BasePage {
         .move({origin: orgElement, x:5, y:0, duration: moveDuration})
         .move({origin: orgElement, x:0, y:5, duration: moveDuration})
         .pause(moveDuration);
+    };
+    async canHover(elementBy: By) {
+        const hover = this.driver.actions();
+        const startElement = await this.getElement(elementBy);
+        await this.actionWiggle(hover, startElement, 100);
+        await hover.perform();
+        await fs.writeFile(`#{__dirname}/hoverPhoto.png`,
+            await this.driver.takeScreenshot(), "base64",
+            (e) => {
+                if(e) console.error(e)
+                    else console.log
+            }
+        )
     };
 }
