@@ -19,6 +19,6 @@ test('Send Message', async () => {
     await restaurant.setInput(restaurant.emailAdd, "testemail@gmail.com");
     await restaurant.setInput(restaurant.phoneNum, 1234567890);
     await restaurant.setInput(restaurant.comment, "great food!");
-    //add more
+    await restaurant.restaurantScreeshot(restaurant.sendMessage);
     await restaurant.driver.quit();
 });

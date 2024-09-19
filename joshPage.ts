@@ -1,5 +1,6 @@
 import { BasePage } from "./basePage";
 import { By } from "selenium-webdriver";
+const fs = require('fs');
  
 export class HotoffdeGrill extends BasePage {
     insta: By = By.xpath ('(//span[@class="dmSocialInstagram dm-social-icons-instagram oneIcon socialHubIcon style8"])');
@@ -11,9 +12,20 @@ export class HotoffdeGrill extends BasePage {
     emailAdd: By = By.id ('[id="1440555156"]');
     phoneNum: By = By.id ('[id="1154878065"]');
     comment: By = By.id ('[id="1872492295"]');
-    //add more
-
     constructor() {
         super({url:"https://www.hotoffdegrill.com/"});
     };
+
+    async restaurantScreeshot(elementBy: By) {
+    const hover = this.driver.actions();
+    const startElement = await this.getElement(elementBy);
+    await this.actionWiggle(hover, startElement, 100);
+    await hover.perform();
+    await fs.writeFile(`#{__dirname}/hoverPhoto.png`,
+        await this.driver.takeScreenshot(), "base64",
+        (e) => {
+            if(e) console.error(e)
+                else console.log
+        }
+    )};
 };
